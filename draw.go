@@ -14,9 +14,32 @@ func DrawGrid() {
 	}
 }
 
-func DrawSnake(parts []rl.Vector2) {
+func DrawSnake(parts []rl.Vector2, headDirection rl.Vector2) {
+	var rotation float32
+
+	if headDirection.Y == -1 {
+		rotation = 0
+	} else if headDirection.Y == 1 {
+		rotation = 180
+	} else if headDirection.X == -1 {
+		rotation = 270
+	} else {
+		rotation = 90
+	}
+
 	for i := range parts {
 		vpCords := GridToViewport(int32(parts[i].X), int32(parts[i].Y))
-		rl.DrawCircle(int32(vpCords.X), int32(vpCords.Y), float32((gridBoxSize)/2-(i*2)), rl.Red)
+		if i == 0 {
+			rl.DrawTextureEx(textures["Head.png"], vpCords, rotation, 1, rl.White)
+		} else if i != len(parts)-1 {
+			var dX [2]int = [2]int{int(parts[i-1].X - parts[i].X), int(parts[i].X - parts[i+1].X)}
+			var dY [2]int = [2]int{int(parts[i-1].Y - parts[i].Y), int(parts[i].Y - parts[i+1].Y)}
+
+			if dX[0] == dX[1] && dY == dY {
+				rl.DrawTextureEx(textures["Mid.png"], vpCords, rotation, 1, rl.White)
+			} else {
+
+			}
+		}
 	}
 }

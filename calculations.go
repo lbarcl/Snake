@@ -54,7 +54,7 @@ func CheckCollisions(snakeParts []rl.Vector2, fruit rl.Vector2) string {
 		return "fruit"
 	}
 
-	if snakeParts[0].X <= 0 || snakeParts[0].X > gridWidth || snakeParts[0].Y <= 0 || snakeParts[0].Y > gridHeight {
+	if snakeParts[0].X < 0 || snakeParts[0].X > gridWidth || snakeParts[0].Y < 0 || snakeParts[0].Y > gridHeight {
 		return "wall"
 	}
 

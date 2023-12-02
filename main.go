@@ -21,7 +21,7 @@ var score int8 = 0
 
 func initialize() {
 	rl.InitWindow(viewportWidth, viewportHeight, "Snake")
-	rl.SetTargetFPS(5)
+	rl.SetTargetFPS(2)
 	rl.InitAudioDevice()
 
 	LoadAudio("audio/")
@@ -35,12 +35,12 @@ func close() {
 	rl.CloseWindow()
 }
 
-func draw(snakeParts []rl.Vector2, fruitLocation rl.Vector2) {
+func draw(snakeParts []rl.Vector2, snakeHeadDirection rl.Vector2, fruitLocation rl.Vector2) {
 	rl.BeginDrawing()
 	DrawGrid()
 
 	if gameState == 0 {
-		DrawSnake(snakeParts)
+		DrawSnake(snakeParts, snakeHeadDirection)
 		rl.DrawCircle(int32(fruitLocation.X), int32(fruitLocation.Y), gridBoxSize/2, rl.Blue)
 		rl.DrawText(strconv.Itoa(int(score)), int32((gridWidth/2)*gridBoxSize)-10, gridBoxSize, 50, rl.White)
 	} else {
@@ -75,7 +75,7 @@ func gameLoop(snakeHeadDirection *rl.Vector2, snakeParts []rl.Vector2, fruitLoca
 	case "snake":
 		gameState = -1
 	case "fruit":
-		rl.PlaySound(audio["swallow"])
+		rl.PlaySound(audio["swallow.waw"])
 		score++
 		newTail := rl.Vector2{X: -1, Y: -1}
 		snakeParts = append(snakeParts, newTail)
@@ -110,7 +110,7 @@ func main() {
 			gameLoop(&snakeHeadDirection, snakeParts, &fruitLocation)
 		}
 
-		draw(snakeParts, fruitLocation)
+		draw(snakeParts, snakeHeadDirection, fruitLocation)
 	}
 
 	close()

@@ -8,7 +8,7 @@ import (
 )
 
 func GridToViewport(X int32, Y int32) rl.Vector2 {
-	return rl.Vector2{X: float32(X)*scaleX - 25, Y: float32(Y)*scaleY - 25}
+	return rl.Vector2{X: float32(X) * scaleX, Y: float32(Y) * scaleY}
 }
 
 func ViewportToGrid(viewportCoord rl.Vector2) rl.Vector2 {
