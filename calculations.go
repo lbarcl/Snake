@@ -1,6 +1,7 @@
 package main
 
 import (
+	"math"
 	"math/rand"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
@@ -40,7 +41,7 @@ l:
 		break
 	}
 
-	return GridToViewport(X, Y)
+	return rl.Vector2{X: float32(X), Y: float32(Y)}
 }
 
 func CheckCollisions(snakeParts []rl.Vector2, fruit rl.Vector2) string {
@@ -54,9 +55,32 @@ func CheckCollisions(snakeParts []rl.Vector2, fruit rl.Vector2) string {
 		return "fruit"
 	}
 
-	if snakeParts[0].X < 0 || snakeParts[0].X > gridWidth || snakeParts[0].Y < 0 || snakeParts[0].Y > gridHeight {
+	if snakeParts[0].X < 0 || int32(snakeParts[0].X) > gridWidth || snakeParts[0].Y < 0 || int32(snakeParts[0].Y) > gridHeight {
 		return "wall"
 	}
 
 	return ""
+}
+
+func DirectionToRotation(direction rl.Vector2) float32 {
+	var rotation float32 = 0.0
+
+	if direction.Y == -1 {
+		rotation = 0
+	} else if direction.Y == 1 {
+		rotation = 180
+	} else if direction.X == -1 {
+		rotation = 270
+	} else {
+		rotation = 90
+	}
+
+	return rotation
+}
+
+func VectorToAngle(v rl.Vector2) float32 {
+	rad := float32(math.Atan2(float64(v.Y), float64(v.X)) * (180 / math.Pi))
+	angleDeg := rad * (180 / math.Pi)
+
+	return angleDeg
 }

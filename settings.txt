@@ -1,0 +1,11 @@
+width=500
+height=500
+fps=8
+up=265
+down=264
+left=263
+right=262
+restart=82
+dev_mode=false
+black_square_color=#308913
+light_square_color=#54f71d
